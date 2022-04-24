@@ -9,6 +9,8 @@ buildNumber.properties
 .mvn/timing.properties
 mvn/wrapper/maven-wrapper.jar
 
+*.iml
+**/**.iml
 **/mvnw
 **/mvnw.cmd
 **/.mvn
@@ -16,4 +18,4 @@ mvn/wrapper/maven-wrapper.jar
 .idea
 **/.gitignore
 **/*.md
-**/*.iml
+
