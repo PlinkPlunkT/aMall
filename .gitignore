@@ -15,3 +15,5 @@ mvn/wrapper/maven-wrapper.jar
 **/target/
 .idea
 **/.gitignore
+**/*.md
+**/*.iml
