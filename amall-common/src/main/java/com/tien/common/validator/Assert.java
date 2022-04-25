@@ -6,9 +6,9 @@
  * 版权所有，侵权必究！
  */
 
-package io.renren.common.validator;
+package com.tien.common.validator;
 
-import io.renren.common.exception.RRException;
+import com.tien.common.exception.RRException;
 import org.apache.commons.lang.StringUtils;
 
 /**

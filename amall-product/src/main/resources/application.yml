@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: root
+    password: HiAcmeMySQL520
+    url: jdbc:mysql://110.40.220.254:3306/amall_pms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+#  调整自增主键
+  global-config:
+    db-config:
+      id-type: auto
