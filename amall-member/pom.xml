@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.7</version>
+        <version>2.6.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.tien.amall</groupId>
@@ -17,7 +17,19 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>2021.0.1</spring-cloud.version>
     </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>com.tien.amall</groupId>
+            <artifactId>amall-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

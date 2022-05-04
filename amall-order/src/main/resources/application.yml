@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    username: root
+    password: HiAcmeMySQL520
+    url: jdbc:mysql://110.40.220.254:3306/amall_oms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  #  配置 spring cloud alibaba
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    #    负载均衡配置
+    loadbalancer:
+      cache:
+        enabled: true
+        caffeine:
+          spec: initialCapacity=500,expireAfterWrite=5s
+  application:
+    name: amall-order
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  #  调整自增主键
+  global-config:
+    db-config:
+      id-type: auto
+
+# 设置端口
+server:
+  port: 9000

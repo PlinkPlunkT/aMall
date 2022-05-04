@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    username: rowot
+    password: HiAcmeMySQL520
+    url: jdbc:mysql://110.40.220.254:3306/amall_ums
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  cloud:
+#    nacos 配置
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+#    负载均衡配置
+    loadbalancer:
+      cache:
+        enabled: true
+        caffeine:
+          spec: initialCapacity=500,expireAfterWrite=5s
+  application:
+    name: amall-member
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  #  调整自增主键
+  global-config:
+    db-config:
+      id-type: auto
+
+# 设置端口
+server:
+  port: 8000

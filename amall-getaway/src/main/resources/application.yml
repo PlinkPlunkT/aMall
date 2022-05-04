@@ -1,0 +1,54 @@
+spring:
+  #  配置 spring cloud alibaba
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    # 配置 网关
+    gateway:
+      routes:
+        #         将商品请求都路由到 product 模块
+        - id: product_route
+          uri: lb://amall-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+#        配置第三方服务的转发
+        - id: third_party_route
+          uri: lb://amall-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
+#        配置前端的转发
+        - id: admin_route
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+
+    #    负载均衡配置
+    loadbalancer:
+      cache:
+        enabled: true
+        caffeine:
+          spec: initialCapacity=500,expireAfterWrite=5s
+  application:
+    name: amall-gateway
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  #  调整自增主键
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: 1
+      logic_not-delete-value: 0
+
+
+# 设置端口
+server:
+  port: 8888
