@@ -43,6 +43,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
         String key = (String) params.get("key");
         QueryWrapper<BrandEntity> queryWrapper = new QueryWrapper<>();
         if (StringUtils.hasLength(key)) {
+            // queryWrapper.eq("brand_id", key).or().like("name", key);
             queryWrapper.eq("brand_id", key).or().like("name", key);
         }
         IPage<BrandEntity> page = this.page(

@@ -1,15 +1,16 @@
 package com.tien.amall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.tien.amall.product.entity.AttrEntity;
+import com.tien.amall.product.service.AttrAttrgroupRelationService;
+import com.tien.amall.product.service.AttrService;
 import com.tien.amall.product.service.CategoryService;
+import com.tien.amall.product.vo.AttrGroupRelationVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.tien.amall.product.entity.AttrGroupEntity;
 import com.tien.amall.product.service.AttrGroupService;
@@ -34,11 +35,75 @@ public class AttrGroupController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private AttrService attrService;
+
+    @Autowired
+    AttrAttrgroupRelationService relationService;
+
+    /**
+     * @Author: Acme Tien
+     * @Date: 2022/5/5 22:07
+     * @Email: bhappy1314i@gmail.com
+     * @Params:
+     * @return:
+     * @Description: 添加关联关系
+     **/
+    // /product/attrgroup/attr/relation
+    @PostMapping("/attr/relation")
+    public R addRelation(@RequestBody List<AttrGroupRelationVo> vos) {
+
+        relationService.saveBatch(vos);
+        return R.ok();
+    }
+
+
+    /**
+     * @Author: Acme Tien
+     * @Date: 2022/5/5 22:05
+     * @Email: bhappy1314i@gmail.com
+     * @Params:
+     * @return:
+     * @Description: 获取属性分组里面还没有关联的本分类里面的其他基本属性，方便添加新的关联
+     **/
+    // /product/attrgroup/{attrgroupId}/noattr/relation
+    @GetMapping("/{attrgroupId}/noattr/relation")
+    public R attrNoRelation(@RequestParam Map<String, Object> params,
+                            @PathVariable("attrgroupId") Long attrgroupId) {
+        // 分页方法，要传入分页信息
+        PageUtils page = attrService.getNoRelationAttr(params, attrgroupId);
+        return R.ok().put("page", page);
+    }
+
+    // /product/attrgroup/attr/relation/delete
+    // Post 请求携带来的 JSON 数据，要封装为我们自己的对象，需要加一个 @RequestBody 注解
+    @PostMapping("/attr/relation/delete")
+    public R deleteRealation(@RequestBody AttrGroupRelationVo[] vos) {
+        attrService.deletaRelation(vos);
+        return R.ok();
+    }
+
+
+    /**
+     * @Author: Acme Tien
+     * @Date: 2022/5/5 20:39
+     * @Email: bhappy1314i@gmail.com
+     * @Params:
+     * @return:
+     * @Description: 获取属性分组的关联的所有属性
+     **/
+    @GetMapping("/{attrgroupId}/attr/relation")
+    public R attrRelation(@PathVariable("attrgroupId") Long attrgroupId) {
+        List<AttrEntity> entities = attrService.getAttrRealtion(attrgroupId);
+        return R.ok().put("data", entities);
+    }
+
+
     /**
      * 列表
      *  catelogId : 三级分类ID，是路径变量，需要在方法签名上声明
      */
-    @RequestMapping("/list/{catelogId}")
+    @GetMapping("/list/{catelogId}")
     // @RequiresPermissions("product:attrgroup:list")
     public R list(@RequestParam Map<String, Object> params,
                   @PathVariable("catelogId") Long catelogId){

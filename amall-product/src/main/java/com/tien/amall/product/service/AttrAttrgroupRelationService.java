@@ -1,9 +1,11 @@
 package com.tien.amall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.tien.amall.product.vo.AttrGroupRelationVo;
 import com.tien.common.utils.PageUtils;
 import com.tien.amall.product.entity.AttrAttrgroupRelationEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,7 @@ import java.util.Map;
 public interface AttrAttrgroupRelationService extends IService<AttrAttrgroupRelationEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveBatch(List<AttrGroupRelationVo> vos);
 }
 

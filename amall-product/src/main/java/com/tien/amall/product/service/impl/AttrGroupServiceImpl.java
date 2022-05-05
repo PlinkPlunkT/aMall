@@ -20,24 +20,26 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
     @Override
     public PageUtils queryPage(Map<String, Object> params, Long catelogId) {
+
+        String key = (String) params.get("key");
+        // 要构造的 sql 语句为:
+        // select * from pms_attr_group where catelog_id = ? and (attr_group_id = key or attr_group_name like %key%);
+        QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<>();
+        if (StringUtils.hasLength(key)) {
+//            System.out.println("key 不空");
+            wrapper.and((obj) -> {
+                obj.eq("attr_group_id", key).or().like("attr_group_name", key);
+            });
+        }
+
         // 1、先判断有没有分类ID，没有时会携带 0
         if (catelogId == 0) {
             // 此时要查询所有
             IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params),
-                    new QueryWrapper<AttrGroupEntity>());
+                    wrapper);
             return new PageUtils(page);
         } else {
-            String key = (String) params.get("key");
-            // 要构造的 sql 语句为:
-            // select * from pms_attr_group where catelog_id = ? and (attr_group_id = key or attr_group_name like %key%);
-            QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId);
-            if (StringUtils.hasLength(key)) {
-                System.out.println("key 不空");
-                wrapper.and((obj) -> {
-                    obj.eq("attr_group_id", key).or().like("attr_group_name", key);
-                });
-            }
-
+            wrapper.eq("catelog_id", catelogId);
             IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params),
                     wrapper);
             return new PageUtils(page);
