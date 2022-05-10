@@ -9,6 +9,7 @@ import com.tien.amall.product.service.AttrAttrgroupRelationService;
 import com.tien.amall.product.service.AttrService;
 import com.tien.amall.product.service.CategoryService;
 import com.tien.amall.product.vo.AttrGroupRelationVo;
+import com.tien.amall.product.vo.AttrGroupWithAttrsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,23 @@ public class AttrGroupController {
 
     @Autowired
     AttrAttrgroupRelationService relationService;
+
+    /**
+     * @Author: Acme Tien
+     * @Date: 2022/5/6 14:51
+     * @Email: bhappy1314i@gmail.com
+     * @Params: [catelogId]
+     * @return: com.tien.common.utils.R
+     * @Description: 查出当前分类下的所有属性分组与分组中的属性
+     **/
+    @GetMapping("/{catelogId}/withattr")
+    public R getAttrGroupWithAttrs(@PathVariable("catelogId") Long catelogId) {
+
+        // 1、查出当前分类下的所有属性分组
+        // 2、查出每个属性分组的所有属性 需要编写 Vo
+        List<AttrGroupWithAttrsVo> vos = attrGroupService.getAttrGroupWithAttrsByCatelogId(catelogId);
+        return R.ok().put("data", vos);
+    }
 
     /**
      * @Author: Acme Tien

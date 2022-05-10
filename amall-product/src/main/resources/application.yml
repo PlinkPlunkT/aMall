@@ -14,13 +14,16 @@ spring:
       cache:
         enabled: true
         caffeine:
-          spec: initialCapacity=500,expireAfterWrite=5000s
+          spec: initialCapacity=500,expireAfterWrite=30000s
 #    OSS 对象存储
     alicloud:
       access-key: LTAI5tCcJoXN5npuRvAfneNA
       secret-key: 8Bzkd1jAlL0Jp3jDzePFoicGgqDsax
       oss:
         endpoint: oss-cn-shanghai.aliyuncs.com
+#  jackson 配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 
   application:
     name: amall-product

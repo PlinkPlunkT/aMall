@@ -3,12 +3,9 @@ package com.tien.amall.coupon.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.tien.common.to.SkuReductionTo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.tien.amall.coupon.entity.SkuFullReductionEntity;
 import com.tien.amall.coupon.service.SkuFullReductionService;
@@ -27,8 +24,20 @@ import com.tien.common.utils.R;
 @RestController
 @RequestMapping("coupon/skufullreduction")
 public class SkuFullReductionController {
+
     @Autowired
     private SkuFullReductionService skuFullReductionService;
+
+    /**
+     * 保存SkuReduction 信息
+     */
+    @RequestMapping("/saveInfo")
+    // @RequiresPermissions("coupon:skufullreduction:list")
+    public R saveInfo(@RequestBody SkuReductionTo reductionTo){
+
+        skuFullReductionService.saveSkuReduction(reductionTo);
+        return R.ok();
+    }
 
     /**
      * 列表

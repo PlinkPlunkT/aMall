@@ -1,10 +1,13 @@
 package com.tien.amall.product.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.tien.amall.product.vo.BrandVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +30,22 @@ import com.tien.common.utils.R;
 public class CategoryBrandRelationController {
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
+
+    /**
+     * 与分类关联的品牌列表
+     */
+    @GetMapping("/brands/list")
+    // @RequiresPermissions("product:categorybrandrelation:list")
+    public R relationBrandsList(@RequestParam(value = "catId", required = true) Long catId){
+        List<CategoryBrandRelationEntity> entities = categoryBrandRelationService.getBrandsByCatId(catId);
+        List<BrandVo> vos = new ArrayList<>();
+        entities.forEach(entity -> {
+            BrandVo vo = new BrandVo();
+            BeanUtils.copyProperties(entity, vo);
+            vos.add(vo);
+        });
+        return R.ok().put("data", vos);
+    }
 
     /**
      * 获取当前品牌关联的所有分类

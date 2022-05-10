@@ -7,6 +7,13 @@ spring:
     # 配置 网关
     gateway:
       routes:
+        #         将会员请求都路由到 member 模块
+        - id: member_route
+          uri: lb://amall-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
         #         将商品请求都路由到 product 模块
         - id: product_route
           uri: lb://amall-product

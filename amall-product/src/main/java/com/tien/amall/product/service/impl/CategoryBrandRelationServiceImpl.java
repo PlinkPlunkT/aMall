@@ -7,6 +7,8 @@ import com.tien.amall.product.entity.BrandEntity;
 import com.tien.amall.product.entity.CategoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -27,6 +29,23 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
 
     @Autowired
     CategoryDao categoryDao;
+
+    @Autowired
+    CategoryBrandRelationDao categoryBrandRelationDao;
+
+    /**
+     * @Author: Acme Tien
+     * @Date: 2022/5/6 14:26
+     * @Email: bhappy1314i@gmail.com
+     * @Params: [catId]
+     * @return: java.util.List<com.tien.amall.product.entity.CategoryBrandRelationEntity>
+     * @Description: 根据分类 Id 查找对应的品牌名和品牌Id
+     **/
+    @Override
+    public List<CategoryBrandRelationEntity> getBrandsByCatId(Long catId) {
+        return categoryBrandRelationDao.selectList(new QueryWrapper<CategoryBrandRelationEntity>().eq("catelog_id", catId));
+
+    }
 
     @Override
     public void updateCategory(Long catId, String name) {

@@ -1,8 +1,18 @@
 package com.tien.amall.product.service.impl;
 
 
+import com.tien.amall.product.entity.AttrEntity;
+import com.tien.amall.product.service.AttrService;
+import com.tien.amall.product.vo.AttrGroupWithAttrsVo;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,6 +27,33 @@ import org.springframework.util.StringUtils;
 
 @Service("attrGroupService")
 public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEntity> implements AttrGroupService {
+
+    @Autowired
+    AttrService attrService;
+
+    /**
+     * @Author: Acme Tien
+     * @Date: 2022/5/6 14:58
+     * @Email: bhappy1314i@gmail.com
+     * @Params: [catelogId]
+     * @return: java.util.List<com.tien.amall.product.vo.AttrGroupWithAttrsVo>
+     * @Description: 获取分类下所有分组 & 关联属性
+     **/
+    @Override
+    public List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId) {
+        // 1、查询分组信息
+        List<AttrGroupEntity> attrGroupEntities = this.list(new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId));
+        // 2、查询所有属性
+        List<AttrGroupWithAttrsVo> collect = attrGroupEntities.stream().map(attrGroupEntity -> {
+            AttrGroupWithAttrsVo vo = new AttrGroupWithAttrsVo();
+            BeanUtils.copyProperties(attrGroupEntity, vo);
+            List<AttrEntity> attrs = attrService.getAttrRealtion(attrGroupEntity.getAttrGroupId());
+            vo.setAttrs(attrs);
+            return vo;
+        }).collect(Collectors.toList());
+
+        return collect;
+    }
 
     @Override
     public PageUtils queryPage(Map<String, Object> params, Long catelogId) {

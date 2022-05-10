@@ -1,6 +1,6 @@
 spring:
   datasource:
-    username: rowot
+    username: root
     password: HiAcmeMySQL520
     url: jdbc:mysql://110.40.220.254:3306/amall_ums
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -15,7 +15,7 @@ spring:
       cache:
         enabled: true
         caffeine:
-          spec: initialCapacity=500,expireAfterWrite=5s
+          spec: initialCapacity=500,expireAfterWrite=5000s
   application:
     name: amall-member
 
