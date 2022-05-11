@@ -18,4 +18,7 @@ mvn/wrapper/maven-wrapper.jar
 .idea
 **/.gitignore
 **/*.md
+**/resources/**.yml
+
+.DS_Store
 

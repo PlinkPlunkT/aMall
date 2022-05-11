@@ -21,10 +21,10 @@ class AmallProductApplicationTests {
 //        // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
 //        String endpoint = "oss-cn-shanghai.aliyuncs.com";
 //        // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-//        String accessKeyId = "LTAI5tCcJoXN5npuRvAfneNA";
-//        String accessKeySecret = "8Bzkd1jAlL0Jp3jDzePFoicGgqDsax";
+//        String accessKeyId = "";
+//        String accessKeySecret = "";
 //        // 填写Bucket名称，例如examplebucket。
-//        String bucketName = "amall-acme";
+//        String bucketName = "
 //        // 填写Object完整路径，完整路径中不能包含Bucket名称，例如exampledir/exampleobject.txt。
 //        String objectName = "exampledir/exampleobject.jpg";
 //        // 填写本地文件的完整路径，例如D:\\localpath\\examplefile.txt。
